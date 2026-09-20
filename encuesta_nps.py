@@ -301,7 +301,7 @@ html, body {
     }
 
     .logo {
-        max-width: 115px;
+        max-width: 140px;
     }
 }
 
