@@ -301,7 +301,7 @@ html, body {
     }
 
     .logo {
-        max-width: 115px;
+        max-width: 125px;
     }
 }
 
@@ -317,12 +317,12 @@ html, body {
     }
 
     .logos {
-        height: 50px;
+        height: 60px;
         margin-bottom: 2px;
     }
 
     .logo {
-        height: 42px;
+        height: 52px;
     }
 
     .mensaje {
@@ -348,11 +348,11 @@ html, body {
 @media (max-height: 580px) {
 
     .logos {
-        height: 35px;
+        height: 45px;
     }
 
     .logo {
-        height: 30px;
+        height: 45px;
     }
 
     .titulo {
