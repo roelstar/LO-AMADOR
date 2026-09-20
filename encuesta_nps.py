@@ -170,7 +170,7 @@ with col3:
 # LOGO DISMERCA
 # ------------------------------------------------------------
 
-with col2:
+with col1:
     st.image(
         "logo4.png",
         width=150
