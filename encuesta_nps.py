@@ -134,7 +134,7 @@ col1, col2, col3 = st.columns(
 
 with col1:
     st.image(
-        "logo4.png",
+        "logo.jpg",
         width=100
     )
 
@@ -166,6 +166,28 @@ with col2:
         unsafe_allow_html=True
     )
 
+# ============================================================
+# MENSAJE INFERIOR
+# ============================================================
+
+st.markdown(
+    "<div style='text-align:center; "
+    "font-size:20px; "
+    "font-weight:500; "
+    "color:#666; "
+    "margin-top:20px; "
+    "margin-bottom:30px;'>"
+    "Ayúdanos a seguir mejorando nuestro servicio"
+    "</div>",
+    unsafe_allow_html=True
+)
+
+st.markdown("""
+<div class="tarjeta">
+
+<div class="pregunta">
+¿Quieres realizar nuestra encuesta?
+</div>
 
 <div class="descripcion">
 Tu opinión es muy importante para nosotros.<br>
