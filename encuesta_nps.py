@@ -119,53 +119,39 @@ st.markdown("""
 
 
 # ============================================================
-# ENCABEZADO
-# LOGO AUTECO | TITULO | LOGO DISMERCA
+# LOGOS
 # ============================================================
 
-col1, col2, col3 = st.columns(
-    [1.3, 3.4, 1.3],
-    vertical_alignment="center"
+st.image(
+    "logos_header.png",
+    width=500
 )
 
-# ------------------------------------------------------------
-# LOGO AUTECO
-# ------------------------------------------------------------
+# ============================================================
+# TITULO
+# ============================================================
 
-with col1:
-    st.image(
-        "logos_header.png",
-        width=100
-    )
+st.markdown(
+    "<div style='text-align:center; "
+    "font-size:42px; "
+    "font-weight:900; "
+    "color:#17345f; "
+    "line-height:1.1;'>"
+    "Tu experiencia nos importa"
+    "</div>",
+    unsafe_allow_html=True
+)
 
-# -------------------------------------------------------logo.png-----
-# TITULO CENTRAL
-# ------------------------------------------------------------
-
-with col2:
-
-    st.markdown(
-        "<div style='text-align:center; "
-        "font-size:42px; "
-        "font-weight:900; "
-        "color:#17345f; "
-        "line-height:1.1;'>"
-        "Tu experiencia nos importa"
-        "</div>",
-        unsafe_allow_html=True
-    )
-
-    st.markdown(
-        "<div style='text-align:center; "
-        "font-size:22px; "
-        "font-weight:500; "
-        "color:#666; "
-        "margin-top:8px;'>"
-        "Sede Lo Amador"
-        "</div>",
-        unsafe_allow_html=True
-    )
-
+st.markdown(
+    "<div style='text-align:center; "
+    "font-size:22px; "
+    "font-weight:500; "
+    "color:#666; "
+    "margin-top:8px;'>"
+    "Sede Lo Amador"
+    "</div>",
+    unsafe_allow_html=True
+)
 # ============================================================
 # MENSAJE INFERIOR
 # ============================================================
