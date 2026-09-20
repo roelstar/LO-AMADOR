@@ -1,5 +1,4 @@
 import streamlit as st
-import base64
 
 st.set_page_config(
     page_title="Encuesta Dismerca",
@@ -7,21 +6,6 @@ st.set_page_config(
     layout="centered",
     initial_sidebar_state="collapsed"
 )
-
-# ============================================================
-# FUNCIÓN PARA MOSTRAR LOS LOGOS
-# ============================================================
-
-def imagen_base64(ruta):
-    with open(ruta, "rb") as archivo:
-        return base64.b64encode(archivo.read()).decode()
-
-logo_auteco = imagen_base64("logo3.png")
-logo_dismerca = imagen_base64("logo4.png")
-
-# ============================================================
-# ESTILO
-# ============================================================
 
 st.markdown("""
 <style>
@@ -39,74 +23,30 @@ st.markdown("""
 }
 
 .block-container {
-    width: 100%;
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 35px 20px 40px 20px;
-    box-sizing: border-box;
+    max-width: 750px;
+    padding-top: 50px;
 }
 
-/* ============================================================
-   ENCABEZADO RESPONSIVE
-   ============================================================ */
-
-.encabezado {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 35px;
-    margin: 0 auto;
-    box-sizing: border-box;
-}
-
-.logo-empresa {
-    width: 150px;
-    height: auto;
-    max-width: 22%;
-    object-fit: contain;
-}
-
-.titulo-centro {
-    flex: 1;
-    min-width: 0;
+.icono {
     text-align: center;
-    font-size: clamp(32px, 5vw, 42px);
-    font-weight: 900;
-    color: #17345f;
-    line-height: 1.1;
+    font-size: 75px;
 }
 
-.sede {
+.titulo {
     text-align: center;
-    font-size: clamp(19px, 3vw, 22px);
-    font-weight: 500;
+    font-size: 42px;
+    font-weight: 800;
+    margin-bottom: 10px;
+}
+
+.subtitulo {
+    text-align: center;
+    font-size: 22px;
     color: #666;
-    margin-top: 10px;
+    margin-bottom: 40px;
 }
-
-/* ============================================================
-   MENSAJE INFERIOR
-   ============================================================ */
-
-.mensaje-inferior {
-    width: 100%;
-    text-align: center;
-    font-size: clamp(18px, 3vw, 20px);
-    font-weight: 500;
-    color: #666;
-    margin-top: 25px;
-    margin-bottom: 30px;
-    line-height: 1.4;
-}
-
-/* ============================================================
-   TARJETA
-   ============================================================ */
 
 .tarjeta {
-    width: 100%;
-    box-sizing: border-box;
     background: white;
     padding: 45px 35px;
     border-radius: 28px;
@@ -161,7 +101,6 @@ st.markdown("""
     text-decoration: none !important;
     font-size: 27px;
     font-weight: 800;
-    box-sizing: border-box;
 }
 
 .boton:hover {
@@ -175,127 +114,84 @@ st.markdown("""
     font-size: 15px;
 }
 
-/* ============================================================
-   CELULARES
-   ============================================================ */
-
-@media (max-width: 600px) {
-
-    .block-container {
-        padding: 25px 15px 30px 15px;
-    }
-
-    .encabezado {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 12px;
-    }
-
-    .logo-empresa {
-        width: 110px;
-        max-width: 40%;
-    }
-
-    .titulo-centro {
-        order: 3;
-        flex-basis: 100%;
-        font-size: 34px;
-        line-height: 1.08;
-        margin-top: 8px;
-    }
-
-    .sede {
-        font-size: 20px;
-        margin-top: 8px;
-    }
-
-    .mensaje-inferior {
-        font-size: 19px;
-        margin-top: 22px;
-        margin-bottom: 25px;
-    }
-
-    .tarjeta {
-        padding: 30px 20px;
-        border-radius: 24px;
-    }
-
-    .pregunta {
-        font-size: 25px;
-    }
-
-    .descripcion {
-        font-size: 18px;
-    }
-
-    .aviso {
-        font-size: 18px;
-        padding: 18px 14px;
-    }
-
-    .aviso-titulo {
-        font-size: 22px;
-    }
-
-    .opcion {
-        font-size: 22px;
-    }
-
-    .boton {
-        font-size: 23px;
-        padding: 21px 10px;
-    }
-}
-
 </style>
 """, unsafe_allow_html=True)
 
 
 # ============================================================
 # ENCABEZADO
+# LOGO AUTECO | TITULO | LOGO DISMERCA
 # ============================================================
 
-st.markdown(f"""
-<div class="encabezado">
+col1, col2, col3 = st.columns(
+    [1.3, 3.4, 1.3],
+    vertical_alignment="center"
+)
 
-    <img
-        src="data:image/png;base64,{logo_auteco}"
-        class="logo-empresa"
-    >
+# ------------------------------------------------------------
+# LOGO AUTECO
+# ------------------------------------------------------------
 
-    <div class="titulo-centro">
+with col1:
+    st.image(
+        "logo3.png",
+        width=150
+    )
 
-        Tu experiencia nos importa
+# ------------------------------------------------------------
+# TITULO CENTRAL
+# ------------------------------------------------------------
 
-        <div class="sede">
-            Sede Lo Amador
-        </div>
+with col2:
 
-    </div>
+    st.markdown(
+        "<div style='text-align:center; "
+        "font-size:42px; "
+        "font-weight:900; "
+        "color:#17345f; "
+        "line-height:1.1;'>"
+        "Tu experiencia nos importa"
+        "</div>",
+        unsafe_allow_html=True
+    )
 
-    <img
-        src="data:image/png;base64,{logo_dismerca}"
-        class="logo-empresa"
-    >
+    st.markdown(
+        "<div style='text-align:center; "
+        "font-size:22px; "
+        "font-weight:500; "
+        "color:#666; "
+        "margin-top:8px;'>"
+        "Sede Lo Amador"
+        "</div>",
+        unsafe_allow_html=True
+    )
 
-</div>
-""", unsafe_allow_html=True)
+# ------------------------------------------------------------
+# LOGO DISMERCA
+# ------------------------------------------------------------
+
+with col3:
+    st.image(
+        "logo4.png",
+        width=150
+    )
 
 
 # ============================================================
 # MENSAJE INFERIOR
 # ============================================================
 
-st.markdown("""
-<div class="mensaje-inferior">
-    Ayúdanos a seguir mejorando nuestro servicio
-</div>
-""", unsafe_allow_html=True)
-
-
-# ============================================================
-# TARJETA PRINCIPAL
-# ============================================================
+st.markdown(
+    "<div style='text-align:center; "
+    "font-size:20px; "
+    "font-weight:500; "
+    "color:#666; "
+    "margin-top:20px; "
+    "margin-bottom:30px;'>"
+    "Ayúdanos a seguir mejorando nuestro servicio"
+    "</div>",
+    unsafe_allow_html=True
+)
 
 st.markdown("""
 <div class="tarjeta">
@@ -335,10 +231,6 @@ INICIAR ENCUESTA
 </div>
 """, unsafe_allow_html=True)
 
-
-# ============================================================
-# PIE
-# ============================================================
 
 st.markdown(
     '<div class="pie">Gracias por confiar en nosotros ❤️</div>',
