@@ -2,6 +2,7 @@ import streamlit as st
 from PIL import Image
 import base64
 from io import BytesIO
+import os
 
 # ============================================================
 # CONFIGURACIÓN
@@ -31,6 +32,7 @@ footer {
     display: none !important;
 }
 
+
 /* ============================================================
    CUERPO
    ============================================================ */
@@ -40,6 +42,7 @@ body {
     margin: 0 !important;
     padding: 0 !important;
 }
+
 
 /* ============================================================
    FONDO
@@ -53,6 +56,7 @@ body {
     );
 }
 
+
 /* ============================================================
    CONTENEDOR PRINCIPAL
    ============================================================ */
@@ -62,8 +66,6 @@ body {
     max-width: 900px !important;
 
     width: 100% !important;
-
-    height: 100vh !important;
 
     min-height: 100vh !important;
 
@@ -77,7 +79,7 @@ body {
 
     padding-right: 15px !important;
 
-    overflow: hidden !important;
+    overflow: visible !important;
 }
 
 
@@ -379,18 +381,16 @@ body {
 
 
 /* ============================================================
-   PIE
+   MENSAJE FINAL
    ============================================================ */
 
 .pie {
 
     text-align: center;
 
-    margin-top: clamp(
-        5px,
-        1vh,
-        12px
-    );
+    margin-top: 7px;
+
+    margin-bottom: 3px;
 
     color: #888;
 
@@ -399,6 +399,43 @@ body {
         1.7vh,
         15px
     );
+
+    line-height: 1.1;
+}
+
+
+/* ============================================================
+   QR
+   ============================================================ */
+
+.qr-container {
+
+    width: 100%;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    margin-top: 2px;
+
+    margin-bottom: 4px;
+}
+
+.qr {
+
+    width: clamp(
+        65px,
+        9vh,
+        95px
+    );
+
+    height: auto;
+
+    display: block;
+
+    object-fit: contain;
 }
 
 
@@ -474,6 +511,25 @@ body {
 
         margin-bottom: 10px;
     }
+
+    .pie {
+
+        margin-top: 4px;
+
+        margin-bottom: 2px;
+
+        font-size: 10px;
+    }
+
+    .qr-container {
+
+        margin-top: 1px;
+    }
+
+    .qr {
+
+        width: 80px;
+    }
 }
 
 
@@ -485,14 +541,14 @@ body {
 
     .logos {
 
-        height: 90px;
+        height: 75px;
     }
 
     .logo {
 
-        height: 90px;
+        height: 75px;
 
-        max-width: 200px;
+        max-width: 180px;
     }
 
     .titulo {
@@ -563,7 +619,21 @@ body {
 
         margin-top: 3px;
 
-        font-size: 10px;
+        margin-bottom: 2px;
+
+        font-size: 9px;
+    }
+
+    .qr-container {
+
+        margin-top: 1px;
+
+        margin-bottom: 2px;
+    }
+
+    .qr {
+
+        width: 65px;
     }
 }
 
@@ -590,20 +660,48 @@ def imagen_base64(imagen):
 
 
 # ============================================================
+# RUTA DE LOS ARCHIVOS
+# ============================================================
+
+BASE_DIR = os.path.dirname(
+    os.path.abspath(__file__)
+)
+
+
+# ============================================================
 # CARGAR LOGOS
 # ============================================================
 
 logo_auteco = Image.open(
-    "logo3.png"
+    os.path.join(
+        BASE_DIR,
+        "logo3.png"
+    )
 ).convert("RGBA")
 
+
 logo_dismerca = Image.open(
-    "logo4.png"
+    os.path.join(
+        BASE_DIR,
+        "logo4.png"
+    )
 ).convert("RGBA")
 
 
 # ============================================================
-# CONVERTIR LOGOS
+# CARGAR QR
+# ============================================================
+
+qr = Image.open(
+    os.path.join(
+        BASE_DIR,
+        "qr.png"
+    )
+).convert("RGBA")
+
+
+# ============================================================
+# CONVERTIR IMÁGENES A BASE64
 # ============================================================
 
 auteco_b64 = imagen_base64(
@@ -614,6 +712,10 @@ dismerca_b64 = imagen_base64(
     logo_dismerca
 )
 
+qr_b64 = imagen_base64(
+    qr
+)
+
 
 # ============================================================
 # LOGOS
@@ -621,8 +723,10 @@ dismerca_b64 = imagen_base64(
 
 st.markdown(
     f'<div class="logos">'
-    f'<img class="logo" src="data:image/png;base64,{auteco_b64}">'
-    f'<img class="logo" src="data:image/png;base64,{dismerca_b64}">'
+    f'<img class="logo" '
+    f'src="data:image/png;base64,{auteco_b64}">'
+    f'<img class="logo" '
+    f'src="data:image/png;base64,{dismerca_b64}">'
     f'</div>',
     unsafe_allow_html=True
 )
@@ -709,12 +813,25 @@ st.markdown(
 
 
 # ============================================================
-# PIE
+# MENSAJE FINAL
 # ============================================================
 
 st.markdown(
     '<div class="pie">'
     'Gracias por confiar en nosotros ❤️'
     '</div>',
+    unsafe_allow_html=True
+)
+
+
+# ============================================================
+# QR
+# ============================================================
+
+st.markdown(
+    f'<div class="qr-container">'
+    f'<img class="qr" '
+    f'src="data:image/png;base64,{qr_b64}">'
+    f'</div>',
     unsafe_allow_html=True
 )
