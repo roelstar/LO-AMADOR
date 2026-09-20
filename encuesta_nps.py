@@ -426,9 +426,9 @@ body {
 .qr {
 
     width: clamp(
-        65px,
-        9vh,
-        95px
+        90px,
+        14vh,
+        140px
     );
 
     height: auto;
