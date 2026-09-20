@@ -140,11 +140,11 @@ with col1:
     logo_dismerca = Image.open("logo4.png").convert("RGBA")
 
     # Tamaño de los logos
-    logo_auteco.thumbnail((100, 100))
-    logo_dismerca.thumbnail((100, 100))
+    logo_auteco.thumbnail((150, 100))
+    logo_dismerca.thumbnail((150, 100))
 
     # Espacio exacto de 100 px entre logos
-    espacio = 100
+    espacio = 300
 
     # Altura del conjunto
     altura = max(logo_auteco.height, logo_dismerca.height)
