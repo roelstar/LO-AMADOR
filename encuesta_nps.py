@@ -144,7 +144,7 @@ with col1:
     logo_dismerca.thumbnail((100, 100))
 
     # Espacio exacto de 100 px entre logos
-    espacio = 100
+    espacio = 300
 
     # Altura del conjunto
     altura = max(logo_auteco.height, logo_dismerca.height)
