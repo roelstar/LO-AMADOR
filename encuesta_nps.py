@@ -21,16 +21,29 @@ st.set_page_config(
 st.markdown("""
 <style>
 
+/* ============================================================
+   OCULTAR ELEMENTOS DE STREAMLIT
+   ============================================================ */
+
 #MainMenu,
 header,
 footer {
     display: none !important;
 }
 
-html, body {
+/* ============================================================
+   CUERPO
+   ============================================================ */
+
+html,
+body {
     margin: 0 !important;
     padding: 0 !important;
 }
+
+/* ============================================================
+   FONDO
+   ============================================================ */
 
 .stApp {
     background: linear-gradient(
@@ -40,55 +53,95 @@ html, body {
     );
 }
 
-/* CONTENEDOR PRINCIPAL */
+/* ============================================================
+   CONTENEDOR PRINCIPAL
+   ============================================================ */
+
 .block-container {
+
     max-width: 900px !important;
+
     width: 100% !important;
 
     height: 100vh !important;
+
     min-height: 100vh !important;
 
     box-sizing: border-box;
 
     padding-top: 10px !important;
+
     padding-bottom: 8px !important;
+
     padding-left: 15px !important;
+
     padding-right: 15px !important;
 
     overflow: hidden !important;
 }
+
 
 /* ============================================================
    LOGOS
    ============================================================ */
 
 .logos {
+
     display: flex;
+
     justify-content: center;
+
     align-items: center;
 
-    gap: clamp(15px, 4vw, 45px);
+    gap: clamp(
+        20px,
+        4vw,
+        50px
+    );
 
-    height: clamp(45px, 9vh, 80px);
+    height: clamp(
+        70px,
+        14vh,
+        140px
+    );
 
     margin-bottom: 4px;
 }
 
+
+/* ============================================================
+   TAMAÑO DE LOS LOGOS
+   ============================================================ */
+
 .logo {
-    height: clamp(35px, 7vh, 70px);
+
+    height: clamp(
+        70px,
+        14vh,
+        140px
+    );
+
     width: auto;
-    max-width: 145px;
+
+    max-width: 290px;
+
     object-fit: contain;
 }
+
 
 /* ============================================================
    TITULO
    ============================================================ */
 
 .titulo {
+
     text-align: center;
 
-    font-size: clamp(23px, 4vh, 40px);
+    font-size: clamp(
+        23px,
+        4vh,
+        40px
+    );
 
     font-weight: 900;
 
@@ -99,49 +152,65 @@ html, body {
     margin: 0;
 }
 
+
 /* ============================================================
    SEDE
    ============================================================ */
 
 .subtitulo {
+
     text-align: center;
 
-    font-size: clamp(15px, 2.4vh, 22px);
+    font-size: clamp(
+        15px,
+        2.4vh,
+        22px
+    );
 
     color: #666;
 
     margin-top: 4px;
 }
 
+
 /* ============================================================
    MENSAJE
    ============================================================ */
 
 .mensaje {
+
     text-align: center;
 
-    font-size: clamp(13px, 2.1vh, 20px);
+    font-size: clamp(
+        13px,
+        2.1vh,
+        20px
+    );
 
     color: #666;
 
     margin-top: 8px;
+
     margin-bottom: 10px;
 
     line-height: 1.2;
 }
+
 
 /* ============================================================
    TARJETA
    ============================================================ */
 
 .tarjeta {
+
     background: white;
 
     padding:
         clamp(14px, 2.5vh, 30px)
         clamp(15px, 3vw, 35px);
 
-    border-radius: clamp(18px, 3vh, 28px);
+    border-radius:
+        clamp(18px, 3vh, 28px);
 
     box-shadow:
         0 8px 30px rgba(0,0,0,0.10);
@@ -153,12 +222,18 @@ html, body {
     box-sizing: border-box;
 }
 
+
 /* ============================================================
    PREGUNTA
    ============================================================ */
 
 .pregunta {
-    font-size: clamp(19px, 3vh, 29px);
+
+    font-size: clamp(
+        19px,
+        3vh,
+        29px
+    );
 
     font-weight: 700;
 
@@ -167,12 +242,18 @@ html, body {
     margin-bottom: 8px;
 }
 
+
 /* ============================================================
    DESCRIPCIÓN
    ============================================================ */
 
 .descripcion {
-    font-size: clamp(14px, 2.2vh, 20px);
+
+    font-size: clamp(
+        14px,
+        2.2vh,
+        20px
+    );
 
     color: #666;
 
@@ -181,11 +262,13 @@ html, body {
     margin-bottom: 10px;
 }
 
+
 /* ============================================================
    AVISO
    ============================================================ */
 
 .aviso {
+
     background: #fff7d6;
 
     border: 2px solid #f0c419;
@@ -200,7 +283,11 @@ html, body {
         8px 0
         clamp(10px, 1.8vh, 22px);
 
-    font-size: clamp(12px, 2vh, 19px);
+    font-size: clamp(
+        12px,
+        2vh,
+        19px
+    );
 
     line-height: 1.3;
 
@@ -209,24 +296,36 @@ html, body {
     box-sizing: border-box;
 }
 
+
 /* ============================================================
    TITULO AVISO
    ============================================================ */
 
 .aviso-titulo {
-    font-size: clamp(15px, 2.5vh, 23px);
+
+    font-size: clamp(
+        15px,
+        2.5vh,
+        23px
+    );
 
     font-weight: 800;
 
     margin-bottom: 5px;
 }
 
+
 /* ============================================================
-   OPCIÓN
+   OPCIÓN TALLER
    ============================================================ */
 
 .opcion {
-    font-size: clamp(14px, 2.5vh, 24px);
+
+    font-size: clamp(
+        14px,
+        2.5vh,
+        24px
+    );
 
     font-weight: 800;
 
@@ -237,11 +336,13 @@ html, body {
     margin-top: 7px;
 }
 
+
 /* ============================================================
    BOTÓN
    ============================================================ */
 
 .boton {
+
     display: block;
 
     width: 100%;
@@ -260,7 +361,11 @@ html, body {
 
     text-decoration: none !important;
 
-    font-size: clamp(17px, 2.8vh, 27px);
+    font-size: clamp(
+        17px,
+        2.8vh,
+        27px
+    );
 
     font-weight: 800;
 
@@ -268,22 +373,34 @@ html, body {
 }
 
 .boton:hover {
+
     background: #163ea8;
 }
+
 
 /* ============================================================
    PIE
    ============================================================ */
 
 .pie {
+
     text-align: center;
 
-    margin-top: clamp(5px, 1vh, 12px);
+    margin-top: clamp(
+        5px,
+        1vh,
+        12px
+    );
 
     color: #888;
 
-    font-size: clamp(11px, 1.7vh, 15px);
+    font-size: clamp(
+        11px,
+        1.7vh,
+        15px
+    );
 }
+
 
 /* ============================================================
    TABLET / CELULAR
@@ -292,18 +409,23 @@ html, body {
 @media (max-width: 600px) {
 
     .block-container {
+
         padding-left: 10px !important;
+
         padding-right: 10px !important;
     }
 
     .logos {
-        gap: 12px;
+
+        gap: 20px;
     }
 
     .logo {
-        max-width: 200px;
+
+        max-width: 230px;
     }
 }
+
 
 /* ============================================================
    PANTALLA BAJA
@@ -312,34 +434,48 @@ html, body {
 @media (max-height: 700px) {
 
     .block-container {
+
         padding-top: 5px !important;
+
         padding-bottom: 4px !important;
     }
 
     .logos {
-        height: 50px;
+
+        height: 100px;
+
         margin-bottom: 2px;
     }
 
     .logo {
-        height: 42px;
+
+        height: 104px;
+
+        max-width: 230px;
     }
 
     .mensaje {
+
         margin-top: 4px;
+
         margin-bottom: 6px;
     }
 
     .tarjeta {
+
         padding-top: 12px;
+
         padding-bottom: 12px;
     }
 
     .aviso {
+
         margin-top: 5px;
+
         margin-bottom: 10px;
     }
 }
+
 
 /* ============================================================
    PANTALLA MUY BAJA
@@ -348,62 +484,85 @@ html, body {
 @media (max-height: 580px) {
 
     .logos {
-        height: 35px;
+
+        height: 90px;
     }
 
     .logo {
-        height: 30px;
+
+        height: 90px;
+
+        max-width: 200px;
     }
 
     .titulo {
+
         font-size: 22px;
     }
 
     .subtitulo {
+
         font-size: 14px;
     }
 
     .mensaje {
+
         font-size: 12px;
+
         margin: 3px 0;
     }
 
     .tarjeta {
+
         padding: 9px 12px;
     }
 
     .pregunta {
+
         font-size: 18px;
+
         margin-bottom: 4px;
     }
 
     .descripcion {
+
         font-size: 12px;
+
         margin-bottom: 5px;
     }
 
     .aviso {
+
         padding: 6px 8px;
+
         margin: 5px 0 7px;
+
         font-size: 11px;
     }
 
     .aviso-titulo {
+
         font-size: 14px;
     }
 
     .opcion {
+
         font-size: 13px;
+
         margin-top: 3px;
     }
 
     .boton {
+
         padding: 10px;
+
         font-size: 17px;
     }
 
     .pie {
+
         margin-top: 3px;
+
         font-size: 10px;
     }
 }
@@ -413,7 +572,7 @@ html, body {
 
 
 # ============================================================
-# FUNCIÓN PARA LOGOS
+# FUNCIÓN PARA CONVERTIR IMAGEN A BASE64
 # ============================================================
 
 def imagen_base64(imagen):
@@ -443,8 +602,17 @@ logo_dismerca = Image.open(
 ).convert("RGBA")
 
 
-auteco_b64 = imagen_base64(logo_auteco)
-dismerca_b64 = imagen_base64(logo_dismerca)
+# ============================================================
+# CONVERTIR LOGOS
+# ============================================================
+
+auteco_b64 = imagen_base64(
+    logo_auteco
+)
+
+dismerca_b64 = imagen_base64(
+    logo_dismerca
+)
 
 
 # ============================================================
@@ -465,7 +633,9 @@ st.markdown(
 # ============================================================
 
 st.markdown(
-    '<div class="titulo">Tu experiencia nos importa</div>',
+    '<div class="titulo">'
+    'Tu experiencia nos importa'
+    '</div>',
     unsafe_allow_html=True
 )
 
@@ -475,7 +645,9 @@ st.markdown(
 # ============================================================
 
 st.markdown(
-    '<div class="subtitulo">Sede Lo Amador</div>',
+    '<div class="subtitulo">'
+    'Sede Lo Amador'
+    '</div>',
     unsafe_allow_html=True
 )
 
@@ -493,7 +665,7 @@ st.markdown(
 
 
 # ============================================================
-# TARJETA COMPLETA
+# TARJETA PRINCIPAL
 # ============================================================
 
 st.markdown(
