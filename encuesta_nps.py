@@ -142,7 +142,7 @@ with col1:
 # TITULO CENTRAL
 # ------------------------------------------------------------
 
-with col3:
+with col2:
 
     st.markdown(
         "<div style='text-align:center; "
