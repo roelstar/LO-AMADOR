@@ -120,125 +120,63 @@ st.markdown("""
 
 # ============================================================
 # ENCABEZADO
-# LOGO AUTECO | LOGO DISMERCA | TITULO
+# LOGO AUTECO | TITULO | LOGO DISMERCA
 # ============================================================
 
-import base64
+col1, col2, col3 = st.columns(
+    [1.3, 3.4, 1.3],
+    vertical_alignment="center"
+)
 
 # ------------------------------------------------------------
-# CARGAR LOGOS
+# LOGO AUTECO
 # ------------------------------------------------------------
 
-with open("logo3.png", "rb") as f:
-    logo_auteco = base64.b64encode(f.read()).decode()
-
-with open("logo4.png", "rb") as f:
-    logo_dismerca = base64.b64encode(f.read()).decode()
-
-
-# ============================================================
-# ENCABEZADO RESPONSIVE
-# ============================================================
-
-st.markdown(f"""
-<style>
-
-.encabezado-principal {{
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
-    margin: 0 auto 25px auto;
-    flex-wrap: nowrap;
-}}
-
-.logo-encabezado {{
-    width: 100px;
-    height: auto;
-    object-fit: contain;
-    flex-shrink: 0;
-}}
-
-.titulo-encabezado {{
-    flex: 1;
-    text-align: center;
-    min-width: 0;
-}}
-
-.titulo-principal {{
-    font-size: 42px;
-    font-weight: 900;
-    color: #17345f;
-    line-height: 1.1;
-}}
-
-.sede-principal {{
-    font-size: 22px;
-    font-weight: 500;
-    color: #666;
-    margin-top: 8px;
-}}
+with col1:
+    st.image(
+        "logo3.png",
+        width=100
+    )
 
 
-/* ============================================================
-   CELULAR
-   ============================================================ */
+# ------------------------------------------------------------
+# LOGO DISMERCA
+# ------------------------------------------------------------
 
-@media (max-width: 600px) {{
+with col1:
+    st.image(
+        "logo4.png",
+        width=100
+    )
 
-    .encabezado-principal {{
-        gap: 8px;
-        padding: 0 5px;
-    }}
+# ------------------------------------------------------------
+# TITULO CENTRAL
+# ------------------------------------------------------------
 
-    .logo-encabezado {{
-        width: 75px;
-    }}
+with col3:
 
-    .titulo-principal {{
-        font-size: 28px;
-    }}
+    st.markdown(
+        "<div style='text-align:center; "
+        "font-size:42px; "
+        "font-weight:900; "
+        "color:#17345f; "
+        "line-height:1.1;'>"
+        "Tu experiencia nos importa"
+        "</div>",
+        unsafe_allow_html=True
+    )
 
-    .sede-principal {{
-        font-size: 18px;
-        margin-top: 5px;
-    }}
+    st.markdown(
+        "<div style='text-align:center; "
+        "font-size:22px; "
+        "font-weight:500; "
+        "color:#666; "
+        "margin-top:8px;'>"
+        "Sede Lo Amador"
+        "</div>",
+        unsafe_allow_html=True
+    )
 
-}}
-
-</style>
-
-
-<div class="encabezado-principal">
-
-    <!-- LOGO AUTECO -->
-    <img
-        src="data:image/png;base64,{logo_auteco}"
-        class="logo-encabezado"
-    >
-
-    <!-- TITULO -->
-    <div class="titulo-encabezado">
-
-        <div class="titulo-principal">
-            Tu experiencia nos importa
-        </div>
-
-        <div class="sede-principal">
-            Sede Lo Amador
-        </div>
-
-    </div>
-
-    <!-- LOGO DISMERCA -->
-    <img
-        src="data:image/png;base64,{logo_dismerca}"
-        class="logo-encabezado"
-    >
-
-</div>
-""", unsafe_allow_html=True)
 # ============================================================
 # MENSAJE INFERIOR
 # ============================================================
