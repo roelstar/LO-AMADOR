@@ -135,7 +135,7 @@ col1, col2, col3 = st.columns(
 with col1:
     st.image(
         "logo3.png",
-        width=150
+        width=100
     )
 
 # ------------------------------------------------------------
@@ -173,7 +173,7 @@ with col3:
 with col1:
     st.image(
         "logo4.png",
-        width=150
+        width=100
     )
 
 
