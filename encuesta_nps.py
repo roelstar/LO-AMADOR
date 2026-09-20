@@ -120,25 +120,69 @@ st.markdown("""
 
 # ============================================================
 # ENCABEZADO
-# LOGO AUTECO | TITULO | LOGO DISMERCA
+# LOGOS AUTECO + DISMERCA | TITULO
 # ============================================================
 
+from PIL import Image
+
 col1, col2, col3 = st.columns(
-    [1.3, 3.4, 1.3],
+    [2.8, 3.4, 1.3],
     vertical_alignment="center"
 )
 
 # ------------------------------------------------------------
-# LOGO AUTECO
+# LOGOS AUTECO + DISMERCA EN COLUMNA 1
 # ------------------------------------------------------------
 
 with col1:
-    st.image(
-        "logo3.png",
-        width=150
+
+    logo_auteco = Image.open("logo3.png").convert("RGBA")
+    logo_dismerca = Image.open("logo4.png").convert("RGBA")
+
+    # Tamaño de los logos
+    logo_auteco.thumbnail((100, 100))
+    logo_dismerca.thumbnail((100, 100))
+
+    # Espacio exacto de 100 px entre logos
+    espacio = 100
+
+    # Altura del conjunto
+    altura = max(logo_auteco.height, logo_dismerca.height)
+
+    # Crear imagen transparente
+    ancho_total = (
+        logo_auteco.width
+        + espacio
+        + logo_dismerca.width
     )
 
-# ------------------------------------------------------------
+    logos = Image.new(
+        "RGBA",
+        (ancho_total, altura),
+        (255, 255, 255, 0)
+    )
+
+    # AUTECO a la izquierda
+    logos.paste(
+        logo_auteco,
+        (0, (altura - logo_auteco.height) // 2),
+        logo_auteco
+    )
+
+    # DISMERCA a la derecha, dejando 100 px
+    logos.paste(
+        logo_dismerca,
+        (
+            logo_auteco.width + espacio,
+            (altura - logo_dismerca.height) // 2
+        ),
+        logo_dismerca
+    )
+
+    st.image(
+        logos,
+        use_container_width=False
+    )# ------------------------------------------------------------
 # TITULO CENTRAL
 # ------------------------------------------------------------
 
