@@ -1,11 +1,4 @@
 import streamlit as st
-from PIL import Image
-import base64
-from io import BytesIO
-
-# ============================================================
-# CONFIGURACIÓN
-# ============================================================
 
 st.set_page_config(
     page_title="Encuesta Dismerca",
@@ -14,22 +7,11 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# ============================================================
-# CSS RESPONSIVE
-# ============================================================
-
 st.markdown("""
 <style>
 
-#MainMenu,
-header,
-footer {
-    display: none !important;
-}
-
-html, body {
-    margin: 0 !important;
-    padding: 0 !important;
+#MainMenu, header, footer {
+    visibility: hidden;
 }
 
 .stApp {
@@ -40,372 +22,96 @@ html, body {
     );
 }
 
-/* CONTENEDOR PRINCIPAL */
 .block-container {
-    max-width: 900px !important;
-    width: 100% !important;
-
-    height: 100vh !important;
-    min-height: 100vh !important;
-
-    box-sizing: border-box;
-
-    padding-top: 10px !important;
-    padding-bottom: 8px !important;
-    padding-left: 15px !important;
-    padding-right: 15px !important;
-
-    overflow: hidden !important;
+    max-width: 750px;
+    padding-top: 50px;
 }
 
-/* ============================================================
-   LOGOS
-   ============================================================ */
-
-.logos {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    gap: clamp(15px, 4vw, 45px);
-
-    height: clamp(45px, 9vh, 80px);
-
-    margin-bottom: 4px;
+.icono {
+    text-align: center;
+    font-size: 75px;
 }
-
-.logo {
-    height: clamp(35px, 7vh, 70px);
-    width: auto;
-    max-width: 145px;
-    object-fit: contain;
-}
-
-/* ============================================================
-   TITULO
-   ============================================================ */
 
 .titulo {
     text-align: center;
-
-    font-size: clamp(23px, 4vh, 40px);
-
-    font-weight: 900;
-
-    color: #17345f;
-
-    line-height: 1.05;
-
-    margin: 0;
+    font-size: 42px;
+    font-weight: 800;
+    margin-bottom: 10px;
 }
-
-/* ============================================================
-   SEDE
-   ============================================================ */
 
 .subtitulo {
     text-align: center;
-
-    font-size: clamp(15px, 2.4vh, 22px);
-
+    font-size: 22px;
     color: #666;
-
-    margin-top: 4px;
+    margin-bottom: 40px;
 }
-
-/* ============================================================
-   MENSAJE
-   ============================================================ */
-
-.mensaje {
-    text-align: center;
-
-    font-size: clamp(13px, 2.1vh, 20px);
-
-    color: #666;
-
-    margin-top: 8px;
-    margin-bottom: 10px;
-
-    line-height: 1.2;
-}
-
-/* ============================================================
-   TARJETA
-   ============================================================ */
 
 .tarjeta {
     background: white;
-
-    padding:
-        clamp(14px, 2.5vh, 30px)
-        clamp(15px, 3vw, 35px);
-
-    border-radius: clamp(18px, 3vh, 28px);
-
-    box-shadow:
-        0 8px 30px rgba(0,0,0,0.10);
-
+    padding: 45px 35px;
+    border-radius: 28px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.10);
     text-align: center;
-
-    width: 100%;
-
-    box-sizing: border-box;
 }
-
-/* ============================================================
-   PREGUNTA
-   ============================================================ */
 
 .pregunta {
-    font-size: clamp(19px, 3vh, 29px);
-
+    font-size: 29px;
     font-weight: 700;
-
-    line-height: 1.15;
-
-    margin-bottom: 8px;
+    margin-bottom: 20px;
 }
-
-/* ============================================================
-   DESCRIPCIÓN
-   ============================================================ */
 
 .descripcion {
-    font-size: clamp(14px, 2.2vh, 20px);
-
+    font-size: 20px;
     color: #666;
-
-    line-height: 1.3;
-
-    margin-bottom: 10px;
+    line-height: 1.5;
+    margin-bottom: 25px;
 }
-
-/* ============================================================
-   AVISO
-   ============================================================ */
 
 .aviso {
     background: #fff7d6;
-
     border: 2px solid #f0c419;
-
-    border-radius: 15px;
-
-    padding:
-        clamp(9px, 1.7vh, 18px)
-        clamp(10px, 2vw, 18px);
-
-    margin:
-        8px 0
-        clamp(10px, 1.8vh, 22px);
-
-    font-size: clamp(12px, 2vh, 19px);
-
-    line-height: 1.3;
-
+    border-radius: 16px;
+    padding: 20px 18px;
+    margin: 20px 0 30px 0;
+    font-size: 21px;
+    line-height: 1.5;
     color: #333;
-
-    box-sizing: border-box;
 }
-
-/* ============================================================
-   TITULO AVISO
-   ============================================================ */
 
 .aviso-titulo {
-    font-size: clamp(15px, 2.5vh, 23px);
-
+    font-size: 24px;
     font-weight: 800;
-
-    margin-bottom: 5px;
+    margin-bottom: 8px;
 }
-
-/* ============================================================
-   OPCIÓN
-   ============================================================ */
 
 .opcion {
-    font-size: clamp(14px, 2.5vh, 24px);
-
+    font-size: 25px;
     font-weight: 800;
-
     color: #1d4ed8;
-
-    line-height: 1.2;
-
-    margin-top: 7px;
+    margin-top: 10px;
 }
-
-/* ============================================================
-   BOTÓN
-   ============================================================ */
 
 .boton {
     display: block;
-
     width: 100%;
-
-    box-sizing: border-box;
-
-    padding:
-        clamp(13px, 2.3vh, 22px)
-        10px;
-
-    border-radius: 16px;
-
+    padding: 24px 10px;
+    border-radius: 18px;
     background: #1d4ed8;
-
     color: white !important;
-
     text-decoration: none !important;
-
-    font-size: clamp(17px, 2.8vh, 27px);
-
+    font-size: 27px;
     font-weight: 800;
-
-    text-align: center;
 }
 
 .boton:hover {
     background: #163ea8;
 }
 
-/* ============================================================
-   PIE
-   ============================================================ */
-
 .pie {
     text-align: center;
-
-    margin-top: clamp(5px, 1vh, 12px);
-
+    margin-top: 30px;
     color: #888;
-
-    font-size: clamp(11px, 1.7vh, 15px);
-}
-
-/* ============================================================
-   TABLET / CELULAR
-   ============================================================ */
-
-@media (max-width: 600px) {
-
-    .block-container {
-        padding-left: 10px !important;
-        padding-right: 10px !important;
-    }
-
-    .logos {
-        gap: 12px;
-    }
-
-    .logo {
-        max-width: 125px;
-    }
-}
-
-/* ============================================================
-   PANTALLA BAJA
-   ============================================================ */
-
-@media (max-height: 700px) {
-
-    .block-container {
-        padding-top: 5px !important;
-        padding-bottom: 4px !important;
-    }
-
-    .logos {
-        height: 60px;
-        margin-bottom: 2px;
-    }
-
-    .logo {
-        height: 52px;
-    }
-
-    .mensaje {
-        margin-top: 4px;
-        margin-bottom: 6px;
-    }
-
-    .tarjeta {
-        padding-top: 12px;
-        padding-bottom: 12px;
-    }
-
-    .aviso {
-        margin-top: 5px;
-        margin-bottom: 10px;
-    }
-}
-
-/* ============================================================
-   PANTALLA MUY BAJA
-   ============================================================ */
-
-@media (max-height: 580px) {
-
-    .logos {
-        height: 45px;
-    }
-
-    .logo {
-        height: 45px;
-    }
-
-    .titulo {
-        font-size: 22px;
-    }
-
-    .subtitulo {
-        font-size: 14px;
-    }
-
-    .mensaje {
-        font-size: 12px;
-        margin: 3px 0;
-    }
-
-    .tarjeta {
-        padding: 9px 12px;
-    }
-
-    .pregunta {
-        font-size: 18px;
-        margin-bottom: 4px;
-    }
-
-    .descripcion {
-        font-size: 12px;
-        margin-bottom: 5px;
-    }
-
-    .aviso {
-        padding: 6px 8px;
-        margin: 5px 0 7px;
-        font-size: 11px;
-    }
-
-    .aviso-titulo {
-        font-size: 14px;
-    }
-
-    .opcion {
-        font-size: 13px;
-        margin-top: 3px;
-    }
-
-    .boton {
-        padding: 10px;
-        font-size: 17px;
-    }
-
-    .pie {
-        margin-top: 3px;
-        font-size: 10px;
-    }
+    font-size: 15px;
 }
 
 </style>
@@ -413,136 +119,153 @@ html, body {
 
 
 # ============================================================
-# FUNCIÓN PARA LOGOS
+# ENCABEZADO
+# LOGOS AUTECO + DISMERCA | TITULO
 # ============================================================
 
-def imagen_base64(imagen):
+from PIL import Image
 
-    buffer = BytesIO()
+col1, col2, col3 = st.columns(
+    [2.8, 3.4, 1.3],
+    vertical_alignment="center"
+)
 
-    imagen.save(
-        buffer,
-        format="PNG"
+# ------------------------------------------------------------
+# LOGOS AUTECO + DISMERCA EN COLUMNA 1
+# ------------------------------------------------------------
+
+with col1:
+
+    logo_auteco = Image.open("logo3.png").convert("RGBA")
+    logo_dismerca = Image.open("logo4.png").convert("RGBA")
+
+    # Tamaño de los logos
+    logo_auteco.thumbnail((150, 100))
+    logo_dismerca.thumbnail((150, 100))
+
+    # Espacio exacto de 100 px entre logos
+    espacio = 300
+
+    # Altura del conjunto
+    altura = max(logo_auteco.height, logo_dismerca.height)
+
+    # Crear imagen transparente
+    ancho_total = (
+        logo_auteco.width
+        + espacio
+        + logo_dismerca.width
     )
 
-    return base64.b64encode(
-        buffer.getvalue()
-    ).decode()
+    logos = Image.new(
+        "RGBA",
+        (ancho_total, altura),
+        (255, 255, 255, 0)
+    )
 
+    # AUTECO a la izquierda
+    logos.paste(
+        logo_auteco,
+        (0, (altura - logo_auteco.height) // 2),
+        logo_auteco
+    )
+
+    # DISMERCA a la derecha, dejando 100 px
+    logos.paste(
+        logo_dismerca,
+        (
+            logo_auteco.width + espacio,
+            (altura - logo_dismerca.height) // 2
+        ),
+        logo_dismerca
+    )
+
+    st.image(
+        logos,
+        use_container_width=False
+    )# ------------------------------------------------------------
+# TITULO CENTRAL
+# ------------------------------------------------------------
+
+with col2:
+
+    st.markdown(
+        "<div style='text-align:center; "
+        "font-size:42px; "
+        "font-weight:900; "
+        "color:#17345f; "
+        "line-height:1.1;'>"
+        "Tu experiencia nos importa"
+        "</div>",
+        unsafe_allow_html=True
+    )
+
+    st.markdown(
+        "<div style='text-align:center; "
+        "font-size:22px; "
+        "font-weight:500; "
+        "color:#666; "
+        "margin-top:8px;'>"
+        "Sede Lo Amador"
+        "</div>",
+        unsafe_allow_html=True
+    )
 
 # ============================================================
-# CARGAR LOGOS
-# ============================================================
-
-logo_auteco = Image.open(
-    "logo3.png"
-).convert("RGBA")
-
-logo_dismerca = Image.open(
-    "logo4.png"
-).convert("RGBA")
-
-
-auteco_b64 = imagen_base64(logo_auteco)
-dismerca_b64 = imagen_base64(logo_dismerca)
-
-
-# ============================================================
-# LOGOS
+# MENSAJE INFERIOR
 # ============================================================
 
 st.markdown(
-    f'<div class="logos">'
-    f'<img class="logo" src="data:image/png;base64,{auteco_b64}">'
-    f'<img class="logo" src="data:image/png;base64,{dismerca_b64}">'
-    f'</div>',
+    "<div style='text-align:center; "
+    "font-size:20px; "
+    "font-weight:500; "
+    "color:#666; "
+    "margin-top:20px; "
+    "margin-bottom:30px;'>"
+    "Ayúdanos a seguir mejorando nuestro servicio"
+    "</div>",
     unsafe_allow_html=True
 )
 
+st.markdown("""
+<div class="tarjeta">
 
-# ============================================================
-# TITULO
-# ============================================================
+<div class="pregunta">
+¿Quieres realizar nuestra encuesta?
+</div>
+
+<div class="descripcion">
+Tu opinión es muy importante para nosotros.<br>
+Solo te tomará unos segundos.
+</div>
+
+<div class="aviso">
+
+<div class="aviso-titulo">
+👉 IMPORTANTE
+</div>
+
+Al ingresar a la encuesta, cuando te solicite
+seleccionar el servicio que deseas evaluar:
+
+<div class="opcion">
+🏍️ Marca: TALLER - POSTVENTA
+</div>
+
+Esto permitirá que tu opinión sea registrada
+correctamente.
+
+</div>
+
+<a class="boton"
+href="https://impulsa-front.web.app/nps?sap=550018941">
+INICIAR ENCUESTA
+</a>
+
+</div>
+""", unsafe_allow_html=True)
+
 
 st.markdown(
-    '<div class="titulo">Tu experiencia nos importa</div>',
-    unsafe_allow_html=True
-)
-
-
-# ============================================================
-# SEDE
-# ============================================================
-
-st.markdown(
-    '<div class="subtitulo">Sede Lo Amador</div>',
-    unsafe_allow_html=True
-)
-
-
-# ============================================================
-# MENSAJE
-# ============================================================
-
-st.markdown(
-    '<div class="mensaje">'
-    'Ayúdanos a seguir mejorando nuestro servicio'
-    '</div>',
-    unsafe_allow_html=True
-)
-
-
-# ============================================================
-# TARJETA COMPLETA
-# ============================================================
-
-st.markdown(
-    '<div class="tarjeta">'
-
-    '<div class="pregunta">'
-    '¿Quieres realizar nuestra encuesta?'
-    '</div>'
-
-    '<div class="descripcion">'
-    'Tu opinión es muy importante para nosotros.<br>'
-    'Solo te tomará unos segundos.'
-    '</div>'
-
-    '<div class="aviso">'
-
-    '<div class="aviso-titulo">'
-    '👉 IMPORTANTE'
-    '</div>'
-
-    'Al ingresar a la encuesta, cuando te solicite '
-    'seleccionar el servicio que deseas evaluar:'
-
-    '<div class="opcion">'
-    '🏍️ Marca: TALLER - POSTVENTA'
-    '</div>'
-
-    'Esto permitirá que tu opinión sea registrada '
-    'correctamente.'
-
-    '</div>'
-
-    '<a class="boton" '
-    'href="https://impulsa-front.web.app/nps?sap=550018941">'
-    'INICIAR ENCUESTA'
-    '</a>'
-
-    '</div>',
-    unsafe_allow_html=True
-)
-
-
-# ============================================================
-# PIE
-# ============================================================
-
-st.markdown(
-    '<div class="pie">'
-    'Gracias por confiar en nosotros ❤️'
-    '</div>',
+    '<div class="pie">Gracias por confiar en nosotros ❤️</div>',
     unsafe_allow_html=True
 )
