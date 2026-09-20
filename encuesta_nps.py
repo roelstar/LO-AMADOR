@@ -134,18 +134,7 @@ col1, col2, col3 = st.columns(
 
 with col1:
     st.image(
-        "logo3.png",
-        width=100
-    )
-
-
-# ------------------------------------------------------------
-# LOGO DISMERCA
-# ------------------------------------------------------------
-
-with col1:
-    st.image(
-        "logo4.png",
+        "logos.jpeg",
         width=100
     )
 
