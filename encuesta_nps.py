@@ -1,4 +1,11 @@
 import streamlit as st
+from PIL import Image
+import base64
+from io import BytesIO
+
+# ============================================================
+# CONFIGURACIÓN
+# ============================================================
 
 st.set_page_config(
     page_title="Encuesta Dismerca",
@@ -7,12 +14,39 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
+# ============================================================
+# ESTILOS - PANTALLA COMPLETA RESPONSIVE
+# ============================================================
+
 st.markdown("""
 <style>
 
-#MainMenu, header, footer {
+/* ============================================================
+   OCULTAR ELEMENTOS STREAMLIT
+   ============================================================ */
+
+#MainMenu,
+header,
+footer {
     visibility: hidden;
+    height: 0;
 }
+
+/* ============================================================
+   ELIMINAR ESPACIOS INNECESARIOS
+   ============================================================ */
+
+html,
+body,
+[data-testid="stAppViewContainer"],
+[data-testid="stApp"] {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* ============================================================
+   FONDO
+   ============================================================ */
 
 .stApp {
     background: linear-gradient(
@@ -22,96 +56,481 @@ st.markdown("""
     );
 }
 
+/* ============================================================
+   CONTENEDOR PRINCIPAL
+   ============================================================ */
+
 .block-container {
-    max-width: 750px;
-    padding-top: 50px;
+
+    width: 100% !important;
+    max-width: 900px !important;
+
+    height: 100vh !important;
+    min-height: 100vh !important;
+
+    box-sizing: border-box;
+
+    padding-top: clamp(8px, 2vh, 25px) !important;
+    padding-bottom: clamp(8px, 2vh, 20px) !important;
+    padding-left: clamp(10px, 3vw, 25px) !important;
+    padding-right: clamp(10px, 3vw, 25px) !important;
+
+    overflow: hidden !important;
 }
 
-.icono {
-    text-align: center;
-    font-size: 75px;
+/* ============================================================
+   CONTENEDOR DE LOGOS
+   ============================================================ */
+
+.logos {
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    gap: clamp(15px, 4vw, 45px);
+
+    width: 100%;
+
+    height: clamp(45px, 10vh, 90px);
+
+    margin-bottom: clamp(3px, 1vh, 10px);
 }
+
+.logo {
+
+    width: auto;
+
+    height: clamp(35px, 8vh, 75px);
+
+    max-width: 150px;
+
+    object-fit: contain;
+}
+
+/* ============================================================
+   TITULO
+   ============================================================ */
 
 .titulo {
+
     text-align: center;
-    font-size: 42px;
-    font-weight: 800;
-    margin-bottom: 10px;
+
+    font-size: clamp(
+        22px,
+        4.2vh,
+        42px
+    );
+
+    font-weight: 900;
+
+    color: #17345f;
+
+    line-height: 1.05;
+
+    margin: 0;
 }
+
+/* ============================================================
+   SUBTITULO
+   ============================================================ */
 
 .subtitulo {
+
     text-align: center;
-    font-size: 22px;
+
+    font-size: clamp(
+        14px,
+        2.5vh,
+        22px
+    );
+
+    font-weight: 500;
+
     color: #666;
-    margin-bottom: 40px;
+
+    margin-top: clamp(2px, 0.8vh, 8px);
 }
+
+/* ============================================================
+   MENSAJE SUPERIOR
+   ============================================================ */
+
+.mensaje {
+
+    text-align: center;
+
+    font-size: clamp(
+        13px,
+        2.3vh,
+        20px
+    );
+
+    font-weight: 500;
+
+    color: #666;
+
+    line-height: 1.2;
+
+    margin-top: clamp(5px, 1.5vh, 18px);
+
+    margin-bottom: clamp(7px, 1.8vh, 20px);
+}
+
+/* ============================================================
+   TARJETA
+   ============================================================ */
 
 .tarjeta {
+
     background: white;
-    padding: 45px 35px;
-    border-radius: 28px;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.10);
+
+    padding:
+        clamp(15px, 3vh, 35px)
+        clamp(15px, 3vw, 35px);
+
+    border-radius: clamp(15px, 3vh, 28px);
+
+    box-shadow:
+        0 8px 30px rgba(0,0,0,0.10);
+
     text-align: center;
+
+    width: 100%;
+
+    box-sizing: border-box;
 }
+
+/* ============================================================
+   PREGUNTA
+   ============================================================ */
 
 .pregunta {
-    font-size: 29px;
+
+    font-size: clamp(
+        18px,
+        3.4vh,
+        29px
+    );
+
     font-weight: 700;
-    margin-bottom: 20px;
+
+    line-height: 1.15;
+
+    margin-bottom: clamp(
+        7px,
+        1.5vh,
+        18px
+    );
 }
+
+/* ============================================================
+   DESCRIPCIÓN
+   ============================================================ */
 
 .descripcion {
-    font-size: 20px;
+
+    font-size: clamp(
+        13px,
+        2.5vh,
+        20px
+    );
+
     color: #666;
-    line-height: 1.5;
-    margin-bottom: 25px;
+
+    line-height: 1.35;
+
+    margin-bottom: clamp(
+        8px,
+        1.8vh,
+        22px
+    );
 }
+
+/* ============================================================
+   AVISO
+   ============================================================ */
 
 .aviso {
+
     background: #fff7d6;
+
     border: 2px solid #f0c419;
-    border-radius: 16px;
-    padding: 20px 18px;
-    margin: 20px 0 30px 0;
-    font-size: 21px;
-    line-height: 1.5;
+
+    border-radius: clamp(
+        10px,
+        2vh,
+        16px
+    );
+
+    padding:
+        clamp(10px, 2vh, 20px)
+        clamp(10px, 2vw, 18px);
+
+    margin:
+        clamp(7px, 1.5vh, 18px)
+        0
+        clamp(10px, 2vh, 25px)
+        0;
+
+    font-size: clamp(
+        12px,
+        2.3vh,
+        21px
+    );
+
+    line-height: 1.3;
+
     color: #333;
+
+    box-sizing: border-box;
 }
+
+/* ============================================================
+   TITULO DEL AVISO
+   ============================================================ */
 
 .aviso-titulo {
-    font-size: 24px;
+
+    font-size: clamp(
+        15px,
+        2.7vh,
+        24px
+    );
+
     font-weight: 800;
-    margin-bottom: 8px;
+
+    margin-bottom: clamp(
+        3px,
+        0.8vh,
+        8px
+    );
 }
+
+/* ============================================================
+   OPCIÓN TALLER
+   ============================================================ */
 
 .opcion {
-    font-size: 25px;
+
+    font-size: clamp(
+        14px,
+        2.8vh,
+        25px
+    );
+
     font-weight: 800;
+
     color: #1d4ed8;
-    margin-top: 10px;
+
+    line-height: 1.2;
+
+    margin-top: clamp(
+        4px,
+        1vh,
+        10px
+    );
 }
 
+/* ============================================================
+   BOTÓN
+   ============================================================ */
+
 .boton {
+
     display: block;
+
     width: 100%;
-    padding: 24px 10px;
-    border-radius: 18px;
+
+    box-sizing: border-box;
+
+    padding:
+        clamp(12px, 2.5vh, 24px)
+        10px;
+
+    border-radius: clamp(
+        10px,
+        2vh,
+        18px
+    );
+
     background: #1d4ed8;
+
     color: white !important;
+
     text-decoration: none !important;
-    font-size: 27px;
+
+    font-size: clamp(
+        16px,
+        3.2vh,
+        27px
+    );
+
     font-weight: 800;
+
+    text-align: center;
 }
 
 .boton:hover {
+
     background: #163ea8;
 }
 
+/* ============================================================
+   PIE DE PÁGINA
+   ============================================================ */
+
 .pie {
+
     text-align: center;
-    margin-top: 30px;
+
+    margin-top: clamp(
+        6px,
+        1.5vh,
+        18px
+    );
+
     color: #888;
-    font-size: 15px;
+
+    font-size: clamp(
+        11px,
+        1.8vh,
+        15px
+    );
+}
+
+/* ============================================================
+   TABLET / CELULAR
+   ============================================================ */
+
+@media (max-width: 600px) {
+
+    .block-container {
+
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+
+    }
+
+    .logos {
+
+        gap: 15px;
+
+    }
+
+    .logo {
+
+        max-width: 115px;
+
+    }
+
+}
+
+/* ============================================================
+   PANTALLAS MUY BAJAS
+   Ejemplo: celular horizontal
+   ============================================================ */
+
+@media (max-height: 650px) {
+
+    .block-container {
+
+        padding-top: 5px !important;
+        padding-bottom: 5px !important;
+
+    }
+
+    .logos {
+
+        height: 45px;
+
+        margin-bottom: 2px;
+
+    }
+
+    .logo {
+
+        height: 38px;
+
+    }
+
+    .mensaje {
+
+        margin-top: 4px;
+
+        margin-bottom: 6px;
+
+    }
+
+    .tarjeta {
+
+        padding-top: 12px;
+
+        padding-bottom: 12px;
+
+    }
+
+}
+
+/* ============================================================
+   PANTALLAS EXTREMADAMENTE BAJAS
+   ============================================================ */
+
+@media (max-height: 550px) {
+
+    .logos {
+
+        height: 35px;
+
+    }
+
+    .logo {
+
+        height: 30px;
+
+    }
+
+    .mensaje {
+
+        display: none;
+
+    }
+
+    .tarjeta {
+
+        padding-top: 10px;
+
+        padding-bottom: 10px;
+
+    }
+
+    .aviso {
+
+        margin-top: 5px;
+
+        margin-bottom: 8px;
+
+        padding-top: 7px;
+
+        padding-bottom: 7px;
+
+    }
+
+    .boton {
+
+        padding-top: 10px;
+
+        padding-bottom: 10px;
+
+    }
+
+    .pie {
+
+        margin-top: 4px;
+
+    }
+
 }
 
 </style>
@@ -119,153 +538,172 @@ st.markdown("""
 
 
 # ============================================================
-# ENCABEZADO
-# LOGOS AUTECO + DISMERCA | TITULO
+# FUNCIÓN PARA CONVERTIR IMAGEN A BASE64
 # ============================================================
 
-from PIL import Image
+def imagen_base64(imagen):
 
-col1, col2, col3 = st.columns(
-    [2.8, 3.4, 1.3],
-    vertical_alignment="center"
+    buffer = BytesIO()
+
+    imagen.save(
+        buffer,
+        format="PNG"
+    )
+
+    return base64.b64encode(
+        buffer.getvalue()
+    ).decode()
+
+
+# ============================================================
+# CARGAR LOGOS
+# ============================================================
+
+logo_auteco = Image.open(
+    "logo3.png"
+).convert("RGBA")
+
+logo_dismerca = Image.open(
+    "logo4.png"
+).convert("RGBA")
+
+
+# ============================================================
+# CONVERTIR LOGOS
+# ============================================================
+
+auteco_b64 = imagen_base64(
+    logo_auteco
 )
 
-# ------------------------------------------------------------
-# LOGOS AUTECO + DISMERCA EN COLUMNA 1
-# ------------------------------------------------------------
+dismerca_b64 = imagen_base64(
+    logo_dismerca
+)
 
-with col1:
-
-    logo_auteco = Image.open("logo3.png").convert("RGBA")
-    logo_dismerca = Image.open("logo4.png").convert("RGBA")
-
-    # Tamaño de los logos
-    logo_auteco.thumbnail((150, 100))
-    logo_dismerca.thumbnail((150, 100))
-
-    # Espacio exacto de 100 px entre logos
-    espacio = 300
-
-    # Altura del conjunto
-    altura = max(logo_auteco.height, logo_dismerca.height)
-
-    # Crear imagen transparente
-    ancho_total = (
-        logo_auteco.width
-        + espacio
-        + logo_dismerca.width
-    )
-
-    logos = Image.new(
-        "RGBA",
-        (ancho_total, altura),
-        (255, 255, 255, 0)
-    )
-
-    # AUTECO a la izquierda
-    logos.paste(
-        logo_auteco,
-        (0, (altura - logo_auteco.height) // 2),
-        logo_auteco
-    )
-
-    # DISMERCA a la derecha, dejando 100 px
-    logos.paste(
-        logo_dismerca,
-        (
-            logo_auteco.width + espacio,
-            (altura - logo_dismerca.height) // 2
-        ),
-        logo_dismerca
-    )
-
-    st.image(
-        logos,
-        use_container_width=False
-    )# ------------------------------------------------------------
-# TITULO CENTRAL
-# ------------------------------------------------------------
-
-with col2:
-
-    st.markdown(
-        "<div style='text-align:center; "
-        "font-size:42px; "
-        "font-weight:900; "
-        "color:#17345f; "
-        "line-height:1.1;'>"
-        "Tu experiencia nos importa"
-        "</div>",
-        unsafe_allow_html=True
-    )
-
-    st.markdown(
-        "<div style='text-align:center; "
-        "font-size:22px; "
-        "font-weight:500; "
-        "color:#666; "
-        "margin-top:8px;'>"
-        "Sede Lo Amador"
-        "</div>",
-        unsafe_allow_html=True
-    )
 
 # ============================================================
-# MENSAJE INFERIOR
+# LOGOS
 # ============================================================
 
 st.markdown(
-    "<div style='text-align:center; "
-    "font-size:20px; "
-    "font-weight:500; "
-    "color:#666; "
-    "margin-top:20px; "
-    "margin-bottom:30px;'>"
-    "Ayúdanos a seguir mejorando nuestro servicio"
-    "</div>",
+    f"""
+    <div class="logos">
+
+        <img
+            class="logo"
+            src="data:image/png;base64,{auteco_b64}"
+        >
+
+        <img
+            class="logo"
+            src="data:image/png;base64,{dismerca_b64}"
+        >
+
+    </div>
+    """,
     unsafe_allow_html=True
 )
 
-st.markdown("""
-<div class="tarjeta">
 
-<div class="pregunta">
-¿Quieres realizar nuestra encuesta?
-</div>
-
-<div class="descripcion">
-Tu opinión es muy importante para nosotros.<br>
-Solo te tomará unos segundos.
-</div>
-
-<div class="aviso">
-
-<div class="aviso-titulo">
-👉 IMPORTANTE
-</div>
-
-Al ingresar a la encuesta, cuando te solicite
-seleccionar el servicio que deseas evaluar:
-
-<div class="opcion">
-🏍️ Marca: TALLER - POSTVENTA
-</div>
-
-Esto permitirá que tu opinión sea registrada
-correctamente.
-
-</div>
-
-<a class="boton"
-href="https://impulsa-front.web.app/nps?sap=550018941">
-INICIAR ENCUESTA
-</a>
-
-</div>
-""", unsafe_allow_html=True)
-
+# ============================================================
+# TITULO
+# ============================================================
 
 st.markdown(
-    '<div class="pie">Gracias por confiar en nosotros ❤️</div>',
+    """
+    <div class="titulo">
+        Tu experiencia nos importa
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
+
+# ============================================================
+# SEDE
+# ============================================================
+
+st.markdown(
+    """
+    <div class="subtitulo">
+        Sede Lo Amador
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
+
+# ============================================================
+# MENSAJE
+# ============================================================
+
+st.markdown(
+    """
+    <div class="mensaje">
+        Ayúdanos a seguir mejorando nuestro servicio
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
+
+# ============================================================
+# TARJETA PRINCIPAL
+# ============================================================
+
+st.markdown(
+    """
+    <div class="tarjeta">
+
+        <div class="pregunta">
+            ¿Quieres realizar nuestra encuesta?
+        </div>
+
+        <div class="descripcion">
+            Tu opinión es muy importante para nosotros.<br>
+            Solo te tomará unos segundos.
+        </div>
+
+        <div class="aviso">
+
+            <div class="aviso-titulo">
+                👉 IMPORTANTE
+            </div>
+
+            Al ingresar a la encuesta, cuando te solicite
+            seleccionar el servicio que deseas evaluar:
+
+            <div class="opcion">
+                🏍️ Marca: TALLER - POSTVENTA
+            </div>
+
+            Esto permitirá que tu opinión sea registrada
+            correctamente.
+
+        </div>
+
+        <a
+            class="boton"
+            href="https://impulsa-front.web.app/nps?sap=550018941"
+        >
+            INICIAR ENCUESTA
+        </a>
+
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
+
+# ============================================================
+# PIE
+# ============================================================
+
+st.markdown(
+    """
+    <div class="pie">
+        Gracias por confiar en nosotros ❤️
+    </div>
+    """,
     unsafe_allow_html=True
 )
