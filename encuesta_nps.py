@@ -119,71 +119,72 @@ st.markdown("""
 
 
 # ============================================================
-# ENCABEZADO
-# LOGOS AUTECO + DISMERCA | TITULO
+# CONFIGURACIÓN DE LOGOS Y FRASE
 # ============================================================
 
-from PIL import Image
+TAMANO_LOGO_AUTECO = 90
+TAMANO_LOGO_DISMERCA = 90
 
-col1, col2, col3 = st.columns(
-    [2.8, 3.4, 1.3],
-    vertical_alignment="center"
-)
+# Espacio entre AUTECO y la frase
+ESPACIO_FRASE = 300
 
-# ------------------------------------------------------------
-# LOGOS AUTECO + DISMERCA EN COLUMNA 1
-# ------------------------------------------------------------
+# Configuración del texto
+TAMANO_TEXTO = 16
+NEGRILLA = 700
+ALTURA_LINEA = 1.2
+COLOR_TEXTO = "#555555"
+
+
+# ============================================================
+# LOGOS + FRASE
+# ============================================================
 
 with col1:
 
-    logo_auteco = Image.open("logo3.png").convert("RGBA")
-    logo_dismerca = Image.open("logo4.png").convert("RGBA")
-
-    # Tamaño de los logos
-    logo_auteco.thumbnail((100, 100))
-    logo_dismerca.thumbnail((100, 100))
-
-    # Espacio exacto de 100 px entre logos
-    espacio = 300
-
-    # Altura del conjunto
-    altura = max(logo_auteco.height, logo_dismerca.height)
-
-    # Crear imagen transparente
-    ancho_total = (
-        logo_auteco.width
-        + espacio
-        + logo_dismerca.width
+    logo_col1, texto_col, logo_col2 = st.columns(
+        [1, 1.8, 1],
+        vertical_alignment="center"
     )
 
-    logos = Image.new(
-        "RGBA",
-        (ancho_total, altura),
-        (255, 255, 255, 0)
-    )
+    # --------------------------------------------------------
+    # AUTECO
+    # --------------------------------------------------------
+    with logo_col1:
+        st.image(
+            "logo3.png",
+            width=TAMANO_LOGO_AUTECO
+        )
 
-    # AUTECO a la izquierda
-    logos.paste(
-        logo_auteco,
-        (0, (altura - logo_auteco.height) // 2),
-        logo_auteco
-    )
+    # --------------------------------------------------------
+    # FRASE
+    # --------------------------------------------------------
+    with texto_col:
 
-    # DISMERCA a la derecha, dejando 100 px
-    logos.paste(
-        logo_dismerca,
-        (
-            logo_auteco.width + espacio,
-            (altura - logo_dismerca.height) // 2
-        ),
-        logo_dismerca
-    )
+        st.markdown(
+            f"""
+            <div style="
+                text-align:center;
+                font-size:{TAMANO_TEXTO}px;
+                font-weight:{NEGRILLA};
+                color:{COLOR_TEXTO};
+                line-height:{ALTURA_LINEA};
+                margin-left:{ESPACIO_FRASE}px;
+                white-space:nowrap;
+            ">
+                TU EXPERIENCIA NOS IMPORTA
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
 
-    st.image(
-        logos,
-        use_container_width=False
-    )
-
+    # --------------------------------------------------------
+    # DISMERCA
+    # --------------------------------------------------------
+    with logo_col2:
+        st.image(
+            "logo4.png",
+            width=TAMANO_LOGO_DISMERCA
+        )
 # -------------------------------------------------------logo.png-----
 # TITULO CENTRAL
 # ------------------------------------------------------------
