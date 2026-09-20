@@ -71,7 +71,7 @@ body {
 
     padding-top: 10px !important;
 
-    padding-bottom: 8px !important;
+    padding-bottom: 5px !important;
 
     padding-left: 15px !important;
 
@@ -403,6 +403,39 @@ body {
 
 
 /* ============================================================
+   QR
+   ============================================================ */
+
+.qr-container {
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    width: 100%;
+
+    margin-top: 5px;
+
+    margin-bottom: 0;
+}
+
+.qr {
+
+    width: clamp(
+        65px,
+        11vh,
+        115px
+    );
+
+    height: auto;
+
+    display: block;
+}
+
+
+/* ============================================================
    TABLET / CELULAR
    ============================================================ */
 
@@ -437,7 +470,7 @@ body {
 
         padding-top: 5px !important;
 
-        padding-bottom: 4px !important;
+        padding-bottom: 3px !important;
     }
 
     .logos {
@@ -474,6 +507,16 @@ body {
 
         margin-bottom: 10px;
     }
+
+    .qr-container {
+
+        margin-top: 3px;
+    }
+
+    .qr {
+
+        width: 90px;
+    }
 }
 
 
@@ -485,14 +528,14 @@ body {
 
     .logos {
 
-        height: 90px;
+        height: 75px;
     }
 
     .logo {
 
-        height: 90px;
+        height: 75px;
 
-        max-width: 200px;
+        max-width: 180px;
     }
 
     .titulo {
@@ -565,6 +608,16 @@ body {
 
         font-size: 10px;
     }
+
+    .qr-container {
+
+        margin-top: 2px;
+    }
+
+    .qr {
+
+        width: 65px;
+    }
 }
 
 </style>
@@ -603,7 +656,16 @@ logo_dismerca = Image.open(
 
 
 # ============================================================
-# CONVERTIR LOGOS
+# CARGAR QR
+# ============================================================
+
+qr = Image.open(
+    "qr.png"
+).convert("RGBA")
+
+
+# ============================================================
+# CONVERTIR IMÁGENES
 # ============================================================
 
 auteco_b64 = imagen_base64(
@@ -614,6 +676,10 @@ dismerca_b64 = imagen_base64(
     logo_dismerca
 )
 
+qr_b64 = imagen_base64(
+    qr
+)
+
 
 # ============================================================
 # LOGOS
@@ -621,8 +687,10 @@ dismerca_b64 = imagen_base64(
 
 st.markdown(
     f'<div class="logos">'
-    f'<img class="logo" src="data:image/png;base64,{auteco_b64}">'
-    f'<img class="logo" src="data:image/png;base64,{dismerca_b64}">'
+    f'<img class="logo" '
+    f'src="data:image/png;base64,{auteco_b64}">'
+    f'<img class="logo" '
+    f'src="data:image/png;base64,{dismerca_b64}">'
     f'</div>',
     unsafe_allow_html=True
 )
@@ -709,12 +777,25 @@ st.markdown(
 
 
 # ============================================================
-# PIE
+# MENSAJE FINAL
 # ============================================================
 
 st.markdown(
     '<div class="pie">'
     'Gracias por confiar en nosotros ❤️'
     '</div>',
+    unsafe_allow_html=True
+)
+
+
+# ============================================================
+# QR
+# ============================================================
+
+st.markdown(
+    f'<div class="qr-container">'
+    f'<img class="qr" '
+    f'src="data:image/png;base64,{qr_b64}">'
+    f'</div>',
     unsafe_allow_html=True
 )
